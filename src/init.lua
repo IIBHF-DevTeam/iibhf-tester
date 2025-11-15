@@ -8,6 +8,9 @@ local Promise = require(script.Packages:WaitForChild("promise"))
 local Version = "V0.1"
 local CommitID = ""
 
+-- Put your game's name here!
+local GameName = "Name Here"
+
 export type ServerTest = {
     TestName: string,
     TestFunc: (ServerTest) -> boolean,
@@ -48,7 +51,7 @@ function IIBHFTester.CanRun(TestSuite: any)
 end
 
 function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
-    print("")
+    print("Running IIBHF Testing Suite for "..GameName..Version.." Latest Commit ID is: "..CommitID)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
         for _, test: ServerTest in tests do
@@ -85,6 +88,7 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
 end
 
 function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
+    print("Running IIBHF Testing Suite on client for "..GameName..Version.." Latest Commit ID is: "..CommitID)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
         for _, test: ClientTest in tests do
