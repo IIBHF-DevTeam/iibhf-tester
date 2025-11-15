@@ -1,8 +1,12 @@
 [package]
-name = "iibhf-team/iibhf-tester"
+name = "iibhf-devteam/iibhf-tester"
+description = "A simple testing library for roblox games."
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
+repository = "https://github.com/IIBHF-DevTeam/iibhf-tester/tree/main"
+license = "MIT"
+
 
 [dependencies]
 promise = "evaera/promise@4.0.0"
