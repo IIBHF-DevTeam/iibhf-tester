@@ -1,0 +1,31 @@
+{
+    "name": "Utility Function Test",
+    "tree": {
+        "$className": "DataModel",    
+        "HttpService": {
+            "$className": "HttpService",
+            "$properties": {
+              "HttpEnabled": true
+            }
+        },
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "$ignoreUnknownInstances": true,
+            "$path": "test/ServerScriptService"
+        },
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "IIBHFTester": {
+              "$path": "./default.project.json"
+            }
+        },    
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "$path": "test/StarterPlayer", 
+            "StarterPlayerScripts": {
+              "$className": "StarterPlayerScripts",
+              "$path": "test/StarterPlayer/StarterPlayerScripts"
+            }
+        }
+    }
+}
