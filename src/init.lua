@@ -5,7 +5,7 @@ local IIBHFTester = {}
 local RunService = game:GetService("RunService")
 local Promise = require(script.Packages:WaitForChild("promise"))
 
-local Version = "V0.1"
+local Version = " V0.1"
 local CommitID = ""
 
 -- Put your game's name here!
@@ -79,7 +79,7 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
         if TestSuite.TestFailCount > 0 then
             TestSuite.OnTestEndWithFail()
         else
-            TestSuite.OnTestEndWithFail()
+            TestSuite.OnTestEndWithoutFail()
         end
     else
         warn("This test suite can only run in studio!")
@@ -116,7 +116,7 @@ function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
         if TestSuite.TestFailCount > 0 then
             TestSuite.OnTestEndWithFail()
         else
-            TestSuite.OnTestEndWithFail()
+            TestSuite.OnTestEndWithoutFail()
         end
     else
         warn("This test suite can only run in studio!")
