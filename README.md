@@ -34,7 +34,7 @@ All the ``DoesItFail`` files are made to error out, ``DoesItFail.server.luau`` t
 ## API
 ``IIBHFTester.CanRun(TestSuite: any)`` - Takes in a test suite and checks to see if it can currently run
 
-``IIBHFTester.New(TestSuiteName: string, RunOutsideOfStudio: boolean, OnTestEndWithFail: () -> (), OnTestEndWithoutFail: () -> ()): any`` - Makes a new test suite, it will return either an ``IIBHFClientTester`` or ``IIBHFServerTester`` on client and server respectfully, ``OnTestEndWithFail`` and ``OnTestEndWithout``
+``IIBHFTester.New(TestSuiteName: string, RunOutsideOfStudio: boolean, OnTestEndWithFail: () -> (), OnTestEndWithoutFail: () -> ()): any`` - Makes a new test suite, it will return either an ``IIBHFClientTester`` or ``IIBHFServerTester`` on client and server respectfully, ``OnTestEndWithFail`` and ``OnTestEndWithout`` will run depending on if there were test fails or not
 
 ``IIBHFTester.NewServerTest(TestSuite: IIBHFServerTester, TestName: string, TestFunc: (ServerTest) -> boolean, CondToSkip: (ServerTest) -> boolean)`` TestFunc and CondToSkip both return bools, if CondToSkip is ``nil`` then the test will never skip, both ``TestFunc`` and ``CondToSkip`` will have the Test accessible as parameters, will error if ran on a client
 
