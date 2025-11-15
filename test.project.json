@@ -1,5 +1,5 @@
 {
-    "name": "Utility Function Test",
+    "name": "IIBHFTester Test",
     "tree": {
         "$className": "DataModel",    
         "HttpService": {
@@ -15,8 +15,12 @@
         },
         "ReplicatedStorage": {
             "$className": "ReplicatedStorage",
-            "IIBHFTester": {
-              "$path": "./default.project.json"
+            "$path": "test/ReplicatedStorage",
+            "Packages": {
+                "$path": "./Packages",
+                "IIBHFTester": {
+                    "$path": "./"
+                }
             }
         },    
         "StarterPlayer": {
