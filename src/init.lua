@@ -6,7 +6,6 @@ local RunService = game:GetService("RunService")
 local Promise = require(script.Packages:WaitForChild("promise"))
 
 local Version = " V0.1"
-local CommitID = ""
 
 -- Put your game's name here!
 local GameName = "Name Here"
@@ -57,7 +56,7 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
     if RunService:IsClient() then
         error("Cannot start a server test suite on the client, please use StartClientTestSuite")
     end
-    print("Running IIBHF Testing Suite for "..GameName..Version.." Latest Commit ID is: "..CommitID)
+    print("Running IIBHF Testing Suite for "..GameName..Version)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
         for _, test: ServerTest in tests do
@@ -100,7 +99,7 @@ function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
     if RunService:IsClient() then
         error("Cannot start a client test suite on the server, please use StartServerTestSuite")
     end
-    print("Running IIBHF Testing Suite on client for "..GameName..Version.." Latest Commit ID is: "..CommitID)
+    print("Running IIBHF Testing Suite for "..GameName..Version)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
         for _, test: ClientTest in tests do
