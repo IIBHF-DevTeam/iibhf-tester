@@ -51,6 +51,12 @@ function IIBHFTester.CanRun(TestSuite: any)
 end
 
 function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
+    if typeof(TestSuite) ~= "IIBHFServerTester" then
+        error("IIBHFClientTester was passed in, you need to pass in an IIBHFServerTester")
+    end
+    if RunService:IsClient() then
+        error("Cannot start a server test suite on the client, please use StartClientTestSuite")
+    end
     print("Running IIBHF Testing Suite for "..GameName..Version.." Latest Commit ID is: "..CommitID)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
@@ -74,7 +80,7 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
                 else
                     print(test.TestName.."- <b>FAIL(ERR)</b>")
                 end
-            end)
+            end):await()
         end
         if TestSuite.TestFailCount > 0 then
             TestSuite.OnTestEndWithFail()
@@ -88,6 +94,12 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
 end
 
 function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
+    if typeof(TestSuite) ~= "IIBHFClientTester" then
+        error("IIBHFServerTester was passed in, you need to pass in an IIBHFServerTester")
+    end
+    if RunService:IsClient() then
+        error("Cannot start a client test suite on the server, please use StartServerTestSuite")
+    end
     print("Running IIBHF Testing Suite on client for "..GameName..Version.." Latest Commit ID is: "..CommitID)
     if IIBHFTester.CanRun(TestSuite) then
         local tests = TestSuite.Tests
@@ -111,7 +123,7 @@ function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
                 else
                     print(test.TestName.." on client".."- <b>FAIL(ERR)</b>")
                 end
-            end)
+            end):await()
         end
         if TestSuite.TestFailCount > 0 then
             TestSuite.OnTestEndWithFail()
