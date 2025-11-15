@@ -45,7 +45,7 @@ All the ``DoesItFail`` files are made to error out, ``DoesItFail.server.luau`` t
 ``IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)`` Runs a client test suite, will error out if given a server test suite
 
 ## Customizability
-Set ``GameName`` to your game's name!
+Set ``GameName`` in ``src/init.luau`` to your game's name!
 
 # License
-This project is avaliable under the MIT License. See for details
+This project is avaliable under the MIT License. See [LICENSE](https://github.com/IIBHF-DevTeam/iibhf-tester/blob/73cd3c188a9996762f0437f901aaf6f7b86d654d/LICENSE) for details
