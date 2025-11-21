@@ -2,13 +2,14 @@
 --!strict
 
 local IIBHFTester = {}
+local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local Promise = require(script.Packages:WaitForChild("promise"))
 
 local Version = " V0.1"
 
 -- Put your game's name here!
-local GameName = "Name Here"
+local GameName = "Name Here!"
 
 export type ServerTest = {
     TestName: string,
@@ -24,6 +25,7 @@ export type ClientTest = {
 
 export type IIBHFServerTester = {
     TestSuiteName: string,
+    Type: string,
     Tests: {ServerTest},
     TestFailCount: number,
     RunOutsideOfStudio: boolean,
@@ -34,6 +36,7 @@ export type IIBHFServerTester = {
 export type IIBHFClientTester = {
     PlayerObject: Player,
     TestSuiteName: string,
+    Type: string,
     Tests: {ClientTest},
     TestFailCount: number,
     RunOutsideOfStudio: boolean,
@@ -50,7 +53,8 @@ function IIBHFTester.CanRun(TestSuite: any)
 end
 
 function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
-    if typeof(TestSuite) ~= "IIBHFServerTester" then
+    print(typeof(TestSuite)..TestSuite.TestSuiteName)
+    if TestSuite.Type ~= "Server" then
         error("IIBHFClientTester was passed in, you need to pass in an IIBHFServerTester")
     end
     if RunService:IsClient() then
@@ -66,18 +70,19 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
                         local succeeded = test.TestFunc(test)
                         if not succeeded then
                             TestSuite.TestFailCount += 1
-                            resolve(test.TestName.." - <b>FAIL</b>")
+                            resolve(test.TestName.." - FAIL")
                         else
-                            resolve(test.TestName.." - <b>PASS</b>")
+                            resolve(test.TestName.." - PASS")
                         end
                     end
                 end)
             end
             promiseFunc():andThen(print):timeout(25):catch(function()
                 if Promise.Error.isKind(e, Promise.Error.Kind.TimedOut) then
-                    print(test.TestName.."- <b>FAIL(TIMEOUT)</b>")
+                    print(test.TestName.."- FAIL(TIMEOUT)")
                 else
-                    print(test.TestName.."- <b>FAIL(ERR)</b>")
+                    print(test.TestName.."- FAIL(ERR)")
+                    warn(HttpService:JSONEncode(e))
                 end
             end):await()
         end
@@ -93,10 +98,10 @@ function IIBHFTester.StartServerTestSuite(TestSuite: IIBHFServerTester)
 end
 
 function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
-    if typeof(TestSuite) ~= "IIBHFClientTester" then
-        error("IIBHFServerTester was passed in, you need to pass in an IIBHFServerTester")
+    if TestSuite.Type ~= "Client" then
+        error("IIBHFServerTester was passed in, you need to pass in an IIBHFClient Tester")
     end
-    if RunService:IsClient() then
+    if RunService:IsServer() then
         error("Cannot start a client test suite on the server, please use StartServerTestSuite")
     end
     print("Running IIBHF Testing Suite for "..GameName..Version)
@@ -136,22 +141,25 @@ function IIBHFTester.StartClientTestSuite(TestSuite: IIBHFClientTester)
 end
 
 -- Makes a new Test Suite
-function IIBHFTester.new(TestSuiteName: string, RunOutsideOfStudio: boolean, OnTestEndWithFail: () -> (), OnTestEndWithoutFail: () -> ()): any
-    if RunService:IsServer() then
-        --Make tester object
-        local self: IIBHFServerTester = {
-            TestSuiteName = TestSuiteName,
-            Tests = {},
-            TestFailCount = 0,
-            RunOutsideOfStudio = RunOutsideOfStudio,
-            OnTestEndWithFail = OnTestEndWithFail,
-            OnTestEndWithoutFail = OnTestEndWithoutFail
-        }
-        return self :: IIBHFServerTester
-    else
-        local self: IIBHFClientTester = {
+function IIBHFTester.NewServerTester(TestSuiteName: string, RunOutsideOfStudio: boolean, OnTestEndWithFail: () -> (), OnTestEndWithoutFail: () -> ()): IIBHFServerTester
+    --Make tester object
+    local self: IIBHFServerTester = {
+        TestSuiteName = TestSuiteName,
+        Type = "Server",
+        Tests = {},
+        TestFailCount = 0,
+        RunOutsideOfStudio = RunOutsideOfStudio,
+        OnTestEndWithFail = OnTestEndWithFail,
+        OnTestEndWithoutFail = OnTestEndWithoutFail
+    }
+    return self :: IIBHFServerTester
+end
+
+function IIBHFTester.NewClientTester(TestSuiteName: string, RunOutsideOfStudio: boolean, OnTestEndWithFail: () -> (), OnTestEndWithoutFail: () -> ()): IIBHFClientTester
+    local self: IIBHFClientTester = {
             PlayerObject = game:GetService("Players").LocalPlayer,
             TestSuiteName = TestSuiteName,
+            Type = "Client",
             Tests = {},
             TestFailCount = 0,
             RunOutsideOfStudio = RunOutsideOfStudio,
@@ -159,7 +167,6 @@ function IIBHFTester.new(TestSuiteName: string, RunOutsideOfStudio: boolean, OnT
             OnTestEndWithoutFail = OnTestEndWithoutFail
         }
         return self :: IIBHFClientTester
-    end
 end
 
 function IIBHFTester.NewServerTest(TestSuite: IIBHFServerTester, TestName: string, TestFunc: (ServerTest) -> boolean, CondToSkip: (ServerTest) -> boolean): ServerTest
