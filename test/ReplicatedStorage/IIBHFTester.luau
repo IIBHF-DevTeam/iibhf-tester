@@ -1,1 +1,1 @@
-return require(game:GetService("ReplicatedStorage").Packages["IIBHFTester"])
+return require(game:GetService("ReplicatedStorage").Packages._Index["IIBHFTester"])
