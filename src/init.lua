@@ -9,7 +9,13 @@ local Promise = require(script.Packages:WaitForChild("promise"))
 local Version = " V0.1"
 
 -- Put your game's name here!
-local GameName = "Name Here!"
+local GameName
+
+if game:GetService("ReplicatedStorage"):WaitForChild("IIBHFConfig"):FindFirstChild("GameName") then
+    GameName = game:GetService("ReplicatedStorage"):WaitForChild("IIBHFConfig"):FindFirstChild("GameName").Value
+else
+    GameName = "Game Name Here!"
+end
 
 export type ServerTest = {
     TestName: string,

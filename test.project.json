@@ -16,6 +16,9 @@
         "ReplicatedStorage": {
             "$className": "ReplicatedStorage",
             "$path": "test/ReplicatedStorage",
+            "IIBHFConfig": {
+                "$path": "./baseconfig.rbxm"
+            }
             "Packages": {
                 "$path": "./Packages",
                 "iibhf-tester": {
