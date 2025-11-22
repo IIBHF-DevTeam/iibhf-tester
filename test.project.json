@@ -18,8 +18,14 @@
             "$path": "test/ReplicatedStorage",
             "Packages": {
                 "$path": "./Packages",
-                "IIBHFTester": {
-                    "$path": "./"
+                "iibhf-tester": {
+                    "$path": "test/iibhf-tester.luau"
+                },
+                "_Index": {
+                    "$path": "./Packages/_Index",
+                    "IIBHFTester": {
+                        "$path": "./"
+                    }
                 }
             }
         },    
